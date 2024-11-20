@@ -1,0 +1,27 @@
+<odoo>
+        <record id="stock_opname_reject_view_wizard" model="ir.ui.view">
+            <field name="name">stock.opname.reject.wizard</field>
+            <field name="model">stock.opname.reject</field>
+            <field name="arch" type="xml">
+                <form string="Reject PO">
+                    <group class="oe_title">
+                        <field name="reject_reason"/>
+                    </group>
+                    <footer>
+                        <button name="action_reject_reason" string="SUBMIT" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="stock_opname_reject_action" model="ir.actions.act_window">
+            <field name="name">Reject Stock Opname</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.opname.reject</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="stock_opname_reject_view_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+</odoo>

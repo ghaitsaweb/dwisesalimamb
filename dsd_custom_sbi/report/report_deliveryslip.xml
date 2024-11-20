@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="dsd_report_delivery_document" inherit_id="stock.report_delivery_document">
+      <xpath expr="//div[@name='signature']" position="replace">
+        <div class="row">
+            <div t-if="o.signature" class="col-4 mt32" name="signature">
+              <div class="text-center">
+                  <strong>Signature</strong>
+              </div>
+              <div class="text-center">
+                  <img t-att-src="image_data_uri(o.signature)" style="max-height: 4cm; max-width: 8cm;"/>
+              </div>
+              <div class=" text-center">
+                  <p t-field="o.partner_id.name"/>
+              </div>
+            </div>
+            <div class="col-4 mt32" name="signature_pengirim">
+              <div class="text-center">
+                  <strong>Pengirim</strong>
+              </div>
+              <div style="height:4cm;">
+                  
+              </div>
+              <div class="text-center">
+                  ______________________________
+              </div>
+            </div>
+            <div class="col-4 mt32" name="signature_penerima">
+                <div class="text-center">
+                    <strong>Penerima</strong>
+                </div>
+                <div style="height:4cm;">
+                    
+                </div>
+                <div class="text-center">
+                    ______________________________
+                </div>
+            </div>
+        </div>
+      </xpath>
+  </template>
+
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- ### Membuat Action/Event PO Approval ### -->
+  <record model="ir.actions.act_window" id="purchase_order_approval">
+    <field name="name">Approval</field>
+    <field name="res_model">purchase.order.approval</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record model="ir.ui.view" id="purchases_order_approval_tree_view">
+    <field name="name">purchases.order.approval.tree.view</field>
+    <field name="model">purchase.order.approval</field>
+    <field name="arch" type="xml">
+      <tree string="_tree">
+        <field name="approval_type"/>
+        <field name="currency_id"/>
+        <field name="minimum_amount_total"/>
+        <field name="level"/>
+        <field name="name"/>
+        <field name="approval_id"/>
+      </tree>
+    
+    </field>
+  </record>
+
+  <menuitem name="Approval" id="sub_purchase_order_approval" parent="purchase.menu_purchase_config" action="purchase_order_approval" sequence="10"/>
+
+</odoo>

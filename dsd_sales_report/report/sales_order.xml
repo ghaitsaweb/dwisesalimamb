@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  
+	<template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+	
+		<xpath expr='//t[@t-call="web.external_layout"]' position="attributes">
+          <attribute name="t-call">dsd_sales_report.external_layout</attribute>
+        </xpath>
+		
+		<xpath expr='//span[@t-field="doc.name"]/parent::h2' position="replace">
+          
+          
+        </xpath>
+
+            
+        <xpath expr='//p[@id="fiscal_position_remark"]' position="after">
+			<t t-if="'approver' in doc">
+				<t t-if="not doc.current_group_approval">
+					<div t-if="doc.approver" class="row">
+						<div class="col-4 mt32" name="dibuat_oleh">
+							<div class="text-center">
+							<strong>Dibuat Oleh</strong>
+							</div>
+						<div style="height:4cm;" class="text-center">
+							<img t-att-src="image_data_uri(o.user_id.x_approval_sign)" style="max-height: 4cm; max-width: 8cm;"/>
+						</div>
+							<div class="text-center">
+							<span t-field="doc.user_id"/>
+							</div>
+						</div>
+						<t t-foreach="doc.approver['content']" t-as="emp">
+							<div class="col-4 mt32" name="signature_pengirim">
+								<div class="text-center">
+								<strong><t t-esc="emp['text']"/></strong>
+								</div>
+							<t t-foreach="request.env['res.users'].browse(emp['user'])" t-as="obj">
+								<div style="height:4cm;" class="text-center">
+								<img t-att-src="image_data_uri(obj.x_approval_sign)" style="max-height: 4cm; max-width: 8cm;"/>
+								</div>
+								<div class="text-center"><t t-esc="obj.name"/>
+								</div>
+							</t>
+							</div>
+						</t>
+					</div>
+				</t>
+			</t> 
+        </xpath>
+		
+	</template>
+
+
+  
+  <template id="report_saleorder">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-call="dsd_sales_report.report_saleorder_document" t-lang="doc.partner_id.lang"/>
+			</t>
+		</t>
+	</template>
+
+</odoo>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- purchases Orders Form View  -->
+  <record id="dsd_view_purchase_order_form" model="ir.ui.view">
+    <field name="name">dsd.purchase.order.form</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.purchase_order_form" />
+    <field name="arch" type="xml">
+      
+      
+      <xpath expr="//button[@name='print_quotation'][1]" position="after">
+        <button name="action_submit_draft_quot" states="draft_rfq" type="object" string="SUBMIT RFQ" class="btn-primary" data-hotkey="w"/>
+      </xpath>
+      <xpath expr="//button[@name='button_confirm']" position="after">
+        <button name="action_approve_rfq" attrs="{'invisible':[('hide_button_approval_rfq', '=', True)]}" type="object" string="APPROVE RFQ" class="btn-primary" data-hotkey="w"/>
+        <button name="%(dsd_purchase_approval.quotation_reject_action)d" type="action" attrs="{'invisible':[('hide_button_approval_rfq', '=', True)]}" string="REJECT RFQ" class="btn-danger" data-hotkey="r"/>
+      </xpath>
+
+      <xpath expr="//button[@name='button_confirm']" position="after">
+        <button name="action_approve_po" attrs="{'invisible':[('hide_button_approval_po', '=', True)]}" type="object" string="APPROVE PO" class="btn-primary" data-hotkey="w"/>        
+        <button name="%(dsd_purchase_approval.purchase_reject_action)d" type="action" attrs="{'invisible':[('hide_button_approval_po', '=', True)]}" string="REJECT PO" class="btn-danger" data-hotkey="r"/>
+      </xpath>
+      <xpath expr="//button[@name='button_confirm']" position="after">
+        <button name="action_submit_to_po" states="draft,sent" type="object" string="SUBMIT TO PO" class="btn-primary" data-hotkey="w"/>
+      </xpath>
+
+      <xpath expr="//button[@name='button_confirm'][2]" position="attributes">
+        <attribute name="attrs">{'invisible': [('state', 'not in', ['never visible'])]}</attribute>
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//button[@name='button_confirm'][1]" position="attributes">
+        <attribute name="attrs">{'invisible': [('state', 'not in', ['never visible'])]}</attribute>
+        <attribute name="invisible">1</attribute>
+      </xpath>
+
+      <xpath expr="//span[@class='o_form_label'][1]" position="attributes">
+        <attribute name="attrs">{'invisible': [('state', 'not in', ['draft_rfq','to approve rfq','draft','sent','to approve po','reject rfq'])]}</attribute>
+      </xpath>
+
+      <xpath expr="//span[@class='o_form_label'][2]" position="attributes">
+        <attribute name="attrs">{'invisible': [('state', 'in', ['draft_rfq','to approve rfq','draft','sent','to approve po','reject rfq'])]}</attribute>
+      </xpath>
+
+      <xpath expr="//field[@name='name']" position="replace">
+        <field name="name" readonly="1" attrs="{'invisible': [('state','not in',('draft_rfq','to approve rfq','draft','sent','to approve po','reject rfq'))]}" />
+      </xpath>
+      
+
+      <xpath expr="//field[@name='date_order']" position="after">
+
+			  <field name="reject_reason" attrs="{'invisible':[('reject_reason', '=', False)]}"/>
+		
+      </xpath>
+      <xpath expr="//field[@name='partner_ref']" position="after">
+        <field name="hide_button_approval_rfq" invisible="1"/>
+        <field name="hide_button_approval_po" invisible="1"/>
+        <field name="current_group_approval" attrs="{'invisible':[('current_group_approval', '=', False)]}"/>
+      </xpath>
+    </field>
+  </record>
+  
+
+</odoo>

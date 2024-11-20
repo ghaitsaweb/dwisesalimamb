@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_opname,stock_opname,model_stock_opname,,1,1,1,1
+access_stock_opname_line,stock_opname_line,model_stock_opname_line,,1,1,1,1
+access_stock_opname_reject,stock_opname_reject,model_stock_opname_reject,,1,1,1,1
+access_stock_opname_approval,access_stock_opname_approval,model_stock_opname_approval,,1,0,0,0
+access_config_stock_opname_approval,access_config_stock_opname_approval,model_stock_opname_approval,dsd_stock_opname.group_stock_opname_approval,1,1,1,1

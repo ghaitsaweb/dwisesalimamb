@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- ### Membuat Action/Event PO Approval ### -->
+  <record model="ir.actions.act_window" id="stock_opname_approval">
+    <field name="name">Stock Opname Approval</field>
+    <field name="res_model">stock.opname.approval</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record model="ir.ui.view" id="stock_opname_approval_tree_view">
+    <field name="name">stock.opname.approval.tree.view</field>
+    <field name="model">stock.opname.approval</field>
+    <field name="arch" type="xml">
+      <tree string="_tree">
+        <field name="level"/>
+        <field name="name"/>
+        <field name="approval_id"/>
+      </tree>
+    
+    </field>
+  </record>
+
+  <menuitem name="Stock Opname Approval" id="dsd_stock_opname_inventory" parent="stock.menu_stock_config_settings" action="stock_opname_approval" sequence="1000"/>
+
+
+</odoo>

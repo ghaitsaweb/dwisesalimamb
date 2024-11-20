@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Sales Orders Form View  -->
+  <record id="dsd_view_sale_order_form" model="ir.ui.view">
+    <field name="name">dsd.sale.order.form</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form" />
+    <field name="arch" type="xml">
+      
+      
+      <xpath expr="//button[@name='action_draft']" position="after">
+        <button name="action_submit_draft_quot" states="draft_quotation" type="object" string="SUBMIT QUOTATION" class="btn-primary" data-hotkey="w"/>
+      </xpath>
+      <xpath expr="//button[@name='action_draft']" position="after">
+        <button name="action_approve_sq" attrs="{'invisible':[('hide_button_approval_sq', '=', True)]}" type="object" string="APPROVE QUOTATION" class="btn-primary" data-hotkey="w"/>
+        <button name="%(dsd_approval.quotation_reject_action)d" type="action" attrs="{'invisible':[('hide_button_approval_sq', '=', True)]}" string="REJECT QUOTATION" class="btn-danger" data-hotkey="r"/>
+      </xpath>
+      <xpath expr="//button[@name='action_draft']" position="after">
+        <button name="action_approve_so" attrs="{'invisible':[('hide_button_approval_so', '=', True)]}" type="object" string="APPROVE SO" class="btn-primary" data-hotkey="w"/>        
+        <button name="%(dsd_approval.sale_reject_action)d" type="action" attrs="{'invisible':[('hide_button_approval_so', '=', True)]}" string="REJECT SO" class="btn-danger" data-hotkey="r"/>
+      </xpath>
+      <xpath expr="//button[@name='action_draft']" position="after">
+        <button name="action_submit_to_so" states="draft" type="object" string="SUBMIT TO SO" class="btn-primary" data-hotkey="w"/>
+        <button name="action_negotiate" states="draft" type="object" string="NEGOTIATE" class="btn-primary" data-hotkey="w"/>
+      </xpath>
+      <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+        <attribute name="attrs">{'invisible': [('state', 'not in', ['never visible'])]}</attribute>
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//field[@name='payment_term_id']" position="after">
+        <!-- <field name="outs_approval" readonly="1" attrs="{'invisible':[('state', 'not in', ('to approve sq','to approve so'))]}"/> -->
+			<field name="reject_reason" attrs="{'invisible':[('reject_reason', '=', False)]}"/>
+		
+      </xpath>
+      <xpath expr="//field[@name='payment_term_id']" position="after">
+        <field name="hide_button_approval_sq" invisible="1"/>
+        <field name="hide_button_approval_so" invisible="1"/>
+        <field name="current_group_approval" attrs="{'invisible':[('current_group_approval', '=', False)]}"/>
+      </xpath>
+    </field>
+  </record>
+
+
+  <record id="sale.action_orders" model="ir.actions.act_window">
+    <field name="domain">[('state', 'not in', ('draft_quotation', 'to approve sq', 'draft', 'sent', 'cancel'))]</field>
+  </record>
+  
+
+</odoo>

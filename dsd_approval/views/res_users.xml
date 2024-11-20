@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="dsd_view_users_form" model="ir.ui.view">
+        <field name="name">dsd.view.users.form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='signature']" position="after">
+                <field name="x_approval_sign" attrs="{'invisible':[('is_dsd_purchase_approval_installed', '=', True)]}" widget="image" class="oe_avatar"/>
+            </xpath>
+            <xpath expr="//field[@name='signature']" position="after">
+                <field name="is_dsd_purchase_approval_installed" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    
+  
+
+</odoo>

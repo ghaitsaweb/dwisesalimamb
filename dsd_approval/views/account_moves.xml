@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  
+  <record model="ir.ui.view" id="dsd_account_invoice_form">
+        <field name="name">Account Invoice</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_post'][2]" position="after">
+                <button name="action_submit_draft_out_invoice"  type="object" string="SUBMIT INVOICE" class="btn-primary" data-hotkey="w"
+                attrs="{'invisible':[('state', '!=', 'draft'), ('move_type', 'in', ('out_invoice'))]}"
+                />
+            </xpath>
+            <xpath expr="//button[@name='action_post'][2]" position="after">
+				<button name="action_approve_out_invoice" attrs="{'invisible':[('hide_button_approval', '=', True)]}" type="object" string="APPROVE INVOICE" class="btn-primary" data-hotkey="w"/>
+				<button name="%(dsd_approval.out_invoice_reject_action)d" type="action" attrs="{'invisible':[('hide_button_approval', '=', True)]}" string="REJECT INVOICE" class="btn-danger" data-hotkey="r"/>
+			</xpath>
+			<xpath expr="//field[@name='invoice_payment_term_id']" position="after">
+				<field name="hide_button_approval" invisible="1"/>
+				<field name="current_group_approval" invisible="0"/>
+				<field name="reject_reason" attrs="{'invisible':[('reject_reason', '=', False)]}"/>
+			  </xpath>
+			<xpath expr="//button[@name='action_post'][2]" position="attributes">
+				<attribute name="attrs">{'invisible': [('state', 'not in', ['never visible'])]}</attribute>
+				<attribute name="invisible">1</attribute>
+			  </xpath>
+        </field>
+    </record>
+  
+
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- ### Membuat Action/Event PO Approval ### -->
+  <record model="ir.actions.act_window" id="sale_order_approval">
+    <field name="name">Approval</field>
+    <field name="res_model">sale.order.approval</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record model="ir.ui.view" id="sales_order_approval_tree_view">
+    <field name="name">sales.order.approval.tree.view</field>
+    <field name="model">sale.order.approval</field>
+    <field name="arch" type="xml">
+      <tree string="_tree">
+        <field name="approval_type"/>
+        <field name="name"/>
+        <field name="level"/>
+        <field name="approval_id"/>
+      </tree>
+    
+    </field>
+  </record>
+
+  <menuitem name="Approval" id="sub_sale_order_approval" parent="sale.menu_sale_config" action="sale_order_approval" sequence="10"/>
+
+</odoo>

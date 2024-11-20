@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="sbi_view_order_tree" model="ir.ui.view">
+    <field name="name">sbi.sale.order.tree</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_tree" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="replace">
+        <field name="so_no" string="Number" readonly="1" decoration-bf="1"/>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="sbi_view_order_form" model="ir.ui.view">
+    <field name="name">sbi.sale.order.form</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="replace">
+        <field name="name" readonly="1" attrs="{'invisible': [('state', '=', 'sale'),('so_no','!=',False)]}" />
+        <field name="so_no" readonly="1" attrs="{'invisible': [('state', '!=', 'sale'),('so_no','==',False)]}" />
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

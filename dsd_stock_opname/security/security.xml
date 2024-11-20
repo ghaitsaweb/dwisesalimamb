@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="group_stock_opname_approval" model="res.groups">
+            <field name="name">Stock Opname Approval Config</field>
+        </record>
+
+        <record model="ir.rule" id="stock_opname_company_rule">
+            <field name="name">stock_opname_company multi-company</field>
+            <field name="model_id" ref="model_stock_opname"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+        
+    </data>
+</odoo>

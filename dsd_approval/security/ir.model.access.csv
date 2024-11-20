@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_reject,sale_reject,model_sale_reject,,1,1,1,1
+access_sale_order_approval,sale_order_approval,model_sale_order_approval,,1,0,0,0
+access_config_sale_order_approval,config_sale_order_approval,model_sale_order_approval,dsd_approval.group_admin_sales_approval,1,1,1,1

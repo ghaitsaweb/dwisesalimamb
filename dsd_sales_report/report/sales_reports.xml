@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale.action_report_saleorder" model="ir.actions.report">
+            <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % ('so_no' in object and object.so_no or object.name)</field>
+			<field name="report_name">dsd_sales_report.report_saleorder</field>
+        </record>
+    </data>
+</odoo>

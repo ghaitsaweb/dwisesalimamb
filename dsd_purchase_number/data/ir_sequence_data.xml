@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="new_rfq_running_no" model="ir.sequence">
+        <field name="name">New RFQ No</field>
+        <field name="code">new.rfq.running.no</field>
+        <field name="padding">5</field>
+        <field name="prefix">RFQ</field>
+        <field name="number_increment">1</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="new_po_running_no" model="ir.sequence">
+        <field name="name">New Purchase Order No</field>
+        <field name="code">new.po.running.no</field>
+        <field name="padding">5</field>
+        <field name="prefix">PO</field>
+        <field name="number_increment">1</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record model="ir.actions.act_window" id="stock_opname">
+    <field name="name">Stock Opname</field>
+    <field name="res_model">stock.opname</field>
+    <field name="view_mode">tree,form</field>
+    <field name="type">ir.actions.act_window</field>
+  </record>
+
+  <record model="ir.ui.view" id="stock_opname_tree_view">
+    <field name="name">stock.opname.tree.view</field>
+    <field name="model">stock.opname</field>
+    <field name="arch" type="xml">
+      <tree multi_edit="1" sample="1" decoration-info="state == 'draft'">
+        <field name="company_id" invisible="1"/>
+        <field name="name"/>
+        <field name="date"/>
+        <field name="warehouse_id"/>
+        <field name="location_id"/>
+        <field name="state"/>
+        <field name="company_id" readonly="1" groups="base.group_multi_company"/>
+      </tree>
+    
+    </field>
+  </record>
+
+  <template id="report_stockopname_document">
+      <t t-call="web.internal_layout">
+          <div class="page">
+              <div class="oe_structure"/>
+
+              <h2 class="mt-4">
+                  <span >Stock Opname # </span>
+                  <span t-field="doc.name"/>
+              </h2>
+
+              <div class="row mt-4 mb-4" id="informations">
+                  <div t-if="doc.date" class="col-auto col-3 mw-100 mb-2" name="informations_date">
+                      <strong >Date:</strong>
+                      <p class="m-0" t-field="doc.date" t-options='{"widget": "date"}'/>
+                  </div>
+                  <div class="col-auto col-3 mw-100 mb-2">
+                      <strong>Warehouse:</strong>
+                      <p class="m-0" t-field="doc.warehouse_id"/>
+                  </div>
+                  <div class="col-auto col-3 mw-100 mb-2">
+                      <strong>Location:</strong>
+                      <p class="m-0" t-field="doc.location_id"/>
+                  </div>
+
+                  <div class="col-auto col-3 mw-100 mb-2">
+                      <strong>Staff:</strong>
+                      <p class="m-0" t-field="doc.staff"/>
+                  </div>
+              </div>
+
+
+              <table class="table table-sm o_main_table table-borderless mt-4">
+                  <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                  <thead style="display: table-row-group">
+                      <tr>
+                          <th  class="text-start">Product</th>
+                          <th  class="text-start">Lot/Serial Number</th>
+                          <th  class="text-end">On Hand Quantity</th>
+                          <th  class="text-end">Counted Quantity</th>
+                          <th  class="text-end">Difference</th>
+                          <th  class="text-end">Expired Date</th>
+                          <th  class="text-start">Note</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+
+                      <t t-foreach="doc.product_lines" t-as="line">
+
+                          <tr >
+                              <td ><span t-field="line.product_id"/></td>
+                              <td ><span t-field="line.lot_id"/></td>
+                              <td class="text-end"><span t-field="line.onhand_qty"/></td>
+                              <td class="text-end">
+                                <t t-if="line.applied">
+                                  <span t-field="line.counted_qty"/>
+                                </t>
+                                <t t-else="else">
+                                  ________________
+                                </t>
+                              </td>
+                              <td class="text-end">
+                                <t t-if="line.applied">
+                                  <span t-field="line.difference_qty"/>
+                                </t>
+                                <t t-else="else">
+                                  ________________
+                                </t>
+                              </td>
+                              <td class="text-end"><span t-field="line.expired_date" t-options='{"widget": "date"}'/></td>
+                              <td class="text-start"><span t-field="line.notes"/></td>
+                          </tr>
+
+                          
+                      </t>
+                  </tbody>
+              </table>
+
+              
+          </div>
+      </t>
+  </template>
+
+  <template id="report_stockopname">
+      <t t-call="web.html_container">
+          <t t-foreach="docs" t-as="doc">
+              <t t-call="dsd_stock_opname.report_stockopname_document"/>
+          </t>
+      </t>
+  </template>
+
+  <record id="stock_opname_print_action" model="ir.actions.report">
+        <field name="name">Print Stock Opname</field>
+        <field name="model">stock.opname</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">dsd_stock_opname.report_stockopname</field>
+        <field name="report_file">dsd_stock_opname.report_stockopname</field>
+        <field name="print_report_name">'Stock Opname - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_stock_opname"/>
+        <field name="binding_type">report</field>
+  </record>
+
+  <record model="ir.ui.view" id="stock_opname_form_view">
+    <field name="name">stock.opname.form.view</field>
+    <field name="model">stock.opname</field>
+    <field name="arch" type="xml">
+      <form string="Stock Opname">
+          <field name="reject_reason" invisible="1"/>
+          <field name="level_approval" invisible="1"/>
+          <field name="current_group_approval" invisible="1"/>
+          <field name="approver" invisible="1"/>
+
+          <header>
+            <button name="action_submit" attrs="{'invisible': [('state', 'not in', 'draft')]}" string="SUBMIT" type="object" class="oe_highlight" groups="base.group_user" data-hotkey="x"/>
+            <button name="action_approve" attrs="{'invisible':[('hide_button_approval', '=', True)]}" type="object" string="APPROVE" class="btn-primary" data-hotkey="w"/>
+            <button name="%(dsd_stock_opname.stock_opname_reject_action)d" type="action" attrs="{'invisible':[('hide_button_approval', '=', True)]}" string="REJECT" class="btn-danger" data-hotkey="r"/>
+            <button name="%(dsd_stock_opname.stock_opname_print_action)d" type="action" string="PRINT" class="btn-primary" data-hotkey="p"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,waiting approval,done" />
+          </header>
+          <sheet>
+            <div class="oe_title">
+                <h1><field name="name" nolabel="1"/></h1>
+            </div>
+            <group>
+                <group>
+                    <field name="company_id" invisible="1"/>
+                    <field name="hide_button_approval" invisible="1"/>
+                    <field name="warehouse_id" options="{'no_create': True, 'no_open': True}" groups="stock.group_stock_multi_locations"/>
+                    <field name="location_id" options="{'no_create': True, 'no_open': True}" domain="[('warehouse_id', 'in', [warehouse_id]),('usage', 'not in', ['view'])]" groups="stock.group_stock_multi_locations"/>
+                    <field name="date"/>
+                    <field name="staff"/>
+                    <field name="current_group_approval" attrs="{'invisible':[('current_group_approval', '=', False)]}"/>
+                    <field name="reject_reason" attrs="{'invisible':[('reject_reason', '=', False)]}"/>
+                    <button name="action_generate" class="btn-primary" states="draft" string="Generate" type="object" data-hotkey="v"/>
+                </group>
+            </group>
+            <notebook>
+              <page string="Product Lines" name="product_lines">
+                  <field
+                      name="product_lines"
+                      mode="tree"
+                      attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                      widget="one2many_search"
+                  >
+                      <tree
+                          string="Product Lines"
+                          editable="bottom"
+                          delete="false"
+                          create="false"
+                          decoration-success="applied == True"
+                          decoration-danger="applied == False"
+                          limit="100000000"
+                      >
+                          <field
+                              name="product_id"
+                              attrs="{
+                                  'readonly': True,
+                                  'required': True,
+                              }"
+                              force_save="1"
+                              widget="sol_product_many2one"
+                              width="100px"
+                          />
+                          <field name="company_id"  invisible="1"/>
+                          <field name="lot_id" groups="stock.group_production_lot"/>
+                          <field name="onhand_qty"/>
+                          <field name="counted_qty"/>
+                          <field name="difference_qty" force_save="1"/>
+                          <field name="expired_date"/>
+                          <field name="notes"/>
+                          <field name="action" readonly="1"/>
+                          <button name="action_none" class="transparentText" string="No Action Available" type="object" attrs="{'invisible':['|',('action', '!=', 'none'),('difference_qty', '!=', 0)]}"/>
+                          <button name="action_adjustment" class="btn-warning" string="Adjustment" type="object" data-hotkey="a" attrs="{'invisible':['|',('difference_qty', '=', 0),('state', '=', 'done')]}"/>
+                          <button name="action_scrap" class="btn-danger" string="Scrap" type="object" data-hotkey="s" attrs="{'invisible':['|',('difference_qty', '>=', 0),('state', '=', 'done')]}"/>
+                          <button name="action_none" class="btn-primary" string="None" type="object" data-hotkey="n" attrs="{'invisible':['|',('action', '=', 'none'),('state', '=', 'done')]}"/>
+                          <field name="applied" invisible="1"/>
+                          <field name="state" invisible="1"/>
+                      </tree>
+                      
+                  </field>
+                  
+              </page>
+              
+          </notebook>
+          </sheet>
+          <div class="oe_chatter">
+                <field name="message_follower_ids"/>
+                <field name="message_ids"/>
+            </div>
+      </form>
+    
+    </field>
+  </record>
+
+  <record id="stock_opname_action_view_order_form" model="ir.actions.act_window.view">
+      <field name="sequence" eval="3"/>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="dsd_stock_opname.stock_opname_form_view"/>
+      <field name="act_window_id" ref="stock_opname"/>
+  </record>
+
+  <record id="stock_opname_action_view_order_form" model="ir.actions.act_window.view">
+      <field name="sequence" eval="3"/>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="dsd_stock_opname.stock_opname_tree_view"/>
+      <field name="act_window_id" ref="stock_opname"/>
+  </record>
+
+  <menuitem name="Stock Opname" id="dsd_stock_opname_inventory_approval" parent="stock.menu_stock_warehouse_mgmt" action="stock_opname" sequence="1000"/>
+
+</odoo>

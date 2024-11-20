@@ -1,0 +1,77 @@
+<odoo>
+        <record id="sale_reject_view_wizard" model="ir.ui.view">
+            <field name="name">sale.reject.wizard</field>
+            <field name="model">sale.reject</field>
+            <field name="arch" type="xml">
+                <form string="Reject SO">
+                    <group class="oe_title">
+                        <field name="reject_reason"/>
+                    </group>
+                    <footer>
+                        <button name="action_reject_reason" string="SUBMIT" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="quotation_reject_view_wizard" model="ir.ui.view">
+            <field name="name">quotation.reject.wizard</field>
+            <field name="model">sale.reject</field>
+            <field name="arch" type="xml">
+                <form string="Reject Quotation">
+                    <group class="oe_title">
+                        <field name="reject_reason"/>
+                    </group>
+                    <footer>
+                        <button name="action_reject_quotation_reason" string="SUBMIT" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+		
+		<record id="out_invoice_reject_view_wizard" model="ir.ui.view">
+            <field name="name">outinvice.reject.wizard</field>
+            <field name="model">sale.reject</field>
+            <field name="arch" type="xml">
+                <form string="Reject Sales Invoice">
+                    <group class="oe_title">
+                        <field name="reject_reason"/>
+                    </group>
+                    <footer>
+                        <button name="action_reject_out_invoice_reason" string="SUBMIT" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="sale_reject_action" model="ir.actions.act_window">
+            <field name="name">Reject SO</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.reject</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="sale_reject_view_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        
+        <record id="quotation_reject_action" model="ir.actions.act_window">
+            <field name="name">Reject Quotation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.reject</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="quotation_reject_view_wizard"/>
+            <field name="target">new</field>
+        </record>
+		
+		<record id="out_invoice_reject_action" model="ir.actions.act_window">
+            <field name="name">Reject Sales Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.reject</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="out_invoice_reject_view_wizard"/>
+            <field name="target">new</field>
+        </record>
+</odoo>

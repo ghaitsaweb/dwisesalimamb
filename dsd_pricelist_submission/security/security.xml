@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="group_pricelist_submission_approval" model="res.groups">
+            <field name="name">Pricelist Submission Approval Config</field>
+        </record>
+
+        <record model="ir.rule" id="pricelist_submission_company_rule">
+            <field name="name">pricelist_submission_company multi-company</field>
+            <field name="model_id" ref="model_pricelist_submission"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+        
+    </data>
+</odoo>

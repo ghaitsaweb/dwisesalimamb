@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="dsd_view_base_document_layout" model="ir.ui.view">
+    <field name="name">dsd.base.document.layout.view</field>
+    <field name="model">res.company</field>
+    <field name="inherit_id" ref="base.view_company_form" />
+	
+    <field name="arch" type="xml">
+      <xpath expr='//field[@name="favicon"]' position="after">
+		<field name="x_akhlak_logo" attrs="{'invisible':[('is_dsd_purchase_report_installed', '=', True)]}" widget="image" class="float-start oe_avatar" groups="base.group_no_one"/>
+      </xpath>
+	  <xpath expr="//field[@name='favicon']" position="after">
+        <field name="is_dsd_purchase_report_installed" invisible="1"/>
+      </xpath>
+    </field>
+  </record>
+
+  
+
+</odoo>

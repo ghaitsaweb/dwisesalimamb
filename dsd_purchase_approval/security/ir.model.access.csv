@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_reject,purchase_reject,model_purchase_reject,,1,1,1,1
+access_purchase_order_approval,purchase_order_approval,model_purchase_order_approval,,1,0,0,0
+access_config_purchase_order_approval,config_purchase_order_approval,model_purchase_order_approval,dsd_purchase_approval.group_admin_purchase_approval,1,1,1,1
